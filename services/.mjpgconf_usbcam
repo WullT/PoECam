@@ -1,0 +1,2 @@
+INPUTARG=-i "input_uvc.so -r 1280x960"
+OUTPUTARG=-o "output_http.so -p 8080 --credentials MY_USER:MY_PASSWORD"

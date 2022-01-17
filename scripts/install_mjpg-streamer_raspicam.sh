@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "Installing Mjpg Streamer..."
+echo "Installing mjpg-streamer..."
 sudo apt update  # To get the latest package lists
 sudo apt install git cmake libjpeg8-dev gcc g++ -y
 cd /home/pi
@@ -7,8 +7,12 @@ git clone https://github.com/jacksonliam/mjpg-streamer
 cd /home/pi/mjpg-streamer/mjpg-streamer-experimental
 make
 
+
+sudo raspi-config nonint do_camera 1
+sudo raspi-config nonint do_memory_split 256
+
 sudo wget -O /etc/systemd/system/mjpg-streamer.service https://raw.githubusercontent.com/WullT/PoECam/main/services/mjpg-streamer.service
-sudo wget -O /etc/systemd/system/.mjpgconf https://raw.githubusercontent.com/WullT/PoECam/main/services/.mjpgconf
+sudo wget -O /etc/systemd/system/.mjpgconf https://raw.githubusercontent.com/WullT/PoECam/main/services/.mjpgconf_raspicam
 
 sudo systemctl daemon-reload
 sudo systemctl enable mjpg-streamer.service
