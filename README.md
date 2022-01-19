@@ -3,7 +3,7 @@
 Consists of 
 
 * [mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer), a command line tool that copies JPEG frames from an input (Raspberry Pi Camera od USB camera) to HTTP output plugin
-* [discoveryserver](https://github.com/WullT/PoECam/blob/main/discoveryserver/discoveryserver.py), a simple HTTP server on port 8000 that is used to get discovered by the [APGateway](https://github.com/WullT/APGateway)
+* [register](register/register.py), a simple Python script that periodically sends a POST request to register at the [APGateway](https://github.com/WullT/APGateway)
 
 ## Setup
 
@@ -47,9 +47,9 @@ Setup all in one (USB Cam):
 curl https://raw.githubusercontent.com/WullT/PoECam/main/scripts/setup_complete_usbcam.sh | bash
 ```
 
-Only Discoveryserver:
+Only Register:
 ```sh
-curl https://raw.githubusercontent.com/WullT/PoECam/main/scripts/install_discovery_service.sh | bash
+curl https://raw.githubusercontent.com/WullT/PoECam/main/scripts/install_register_service.sh | bash
 ```
 
 >Reboot after running the scripts:
@@ -58,7 +58,7 @@ sudo reboot
 ```
 
 
-## Change Resolution and basic auth credentials
+## Change camera resolution and basic auth credentials
 
 To check available camera resolutions:
 ```sh
@@ -103,4 +103,28 @@ USB Camera:
 ```conf
 INPUTARG=-i "input_uvc.so -r <RESOLUTION IN FORMAT 1280x960> "
 OUTPUTARG=-o "output_http.so -p 8080 --credentials <USERNAME>:<PASSWORD>"
+```
+
+## Set static IP
+
+Edit `/etc/network/interfaces`
+
+```sh
+sudo nano /etc/network/interfaces
+```
+
+```conf
+# interfaces(5) file used by ifup(8) and ifdown(8)
+# Include files from /etc/network/interfaces.d:
+source /etc/network/interfaces.d/*
+
+auto lo eth0 wlan0
+
+allow-hotplug eth0
+ iface eth0 inet static
+   address 192.168.50.5/24
+
+allow-hotplug wlan0
+ iface wlan0 inet dhcp
+ wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
 ```

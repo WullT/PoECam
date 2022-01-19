@@ -21,12 +21,12 @@ sudo systemctl start mjpg-streamer.service
 systemctl is-active --quiet mjpg-streamer.service && echo mjpg-service is running || echo mjpg-service is not running
 
 
-mkdir /home/pi/discoveryserver
+mkdir /home/pi/register
 
-wget -O /home/pi/discoveryserver/discoveryserver.py https://raw.githubusercontent.com/WullT/PoECam/main/discoveryserver/discoveryserver.py
+wget -O /home/pi/register/register.py https://raw.githubusercontent.com/WullT/PoECam/main/register/register.py
 
-sudo wget -O /etc/systemd/system/discoveryserver.service https://raw.githubusercontent.com/WullT/PoECam/main/services/discoveryserver.service
+sudo wget -O /etc/systemd/system/register.service https://raw.githubusercontent.com/WullT/PoECam/main/services/register.service
 
 sudo systemctl daemon-reload
-sudo systemctl enable discoveryserver.service
-sudo systemctl start discoveryserver.service
+sudo systemctl enable register.service
+sudo systemctl start register.service
