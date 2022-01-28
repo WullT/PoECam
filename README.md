@@ -3,7 +3,7 @@
 Consists of 
 
 * [mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer), a command line tool that copies JPEG frames from an input (Raspberry Pi Camera od USB camera) to HTTP output plugin
-* [register](register/register.py), a simple Python script that periodically sends a POST request to register at the [APGateway](https://github.com/WullT/APGateway)
+* [register](register/register.py), a simple Python script that periodically sends a POST request to the camera at the [APGateway](https://github.com/WullT/APGateway)
 
 ## Setup
 
@@ -35,7 +35,7 @@ ssh pi@cam-1234-5678.local
 passwd
 ```
 
-### Install mjpg-streamer and discoveryserver
+### Install mjpg-streamer and the register app
 
 Setup all in one (Raspberry Cam):
 ```sh
@@ -56,6 +56,14 @@ curl https://raw.githubusercontent.com/WullT/PoECam/main/scripts/install_registe
 ```sh
 sudo reboot
 ```
+
+### Change the IP of the [AP Gateway](https://github.com/WullT/APGateway)
+
+The [register](register/register.py) script sends request to the [registrationserver](https://github.com/WullT/APGateway/blob/main/apps/registrationserver.py) on the AP Gateway. By default, the requests are sent to `http://ap-gateway.local:8888`. The hostname and the port can be changed in the register script:
+```sh
+nano /home/pi/register/register.py
+```
+
 
 
 ## Change camera resolution and basic auth credentials
